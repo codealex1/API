@@ -26,49 +26,23 @@ class RestaurantController extends AbstractController
     }
 
     #[Route(methods: 'POST')]
-    /** @OA\Post(
-     *     path="/api/restaurant",
-     *     summary="Créer un restaurant",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Données du restaurant à créer",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="name", type="string", example="Nom du restaurant"),
-     *             @OA\Property(property="description", type="string", example="Description du restaurant")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Restaurant créé avec succès",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="name", type="string", example="Nom du restaurant"),
-     *             @OA\Property(property="description", type="string", example="Description du restaurant"),
-     *             @OA\Property(property="createdAt", type="string", format="date-time")
-     *         )
-     *     )
-     * )
-     */
-    public function new(Request $request): JsonResponse
+    public function new(): Response
     {
-        $restaurant = $this->serializer->deserialize($request->getContent(), Restaurant::class, 'json');
+        $restaurant = new Restaurant();
+        $restaurant->setName('Quai Antique');
+        $restaurant->setDescription('Cette qualité et ce goût par le chef Arnaud MICHANT.');
         $restaurant->setCreatedAt(new DateTimeImmutable());
 
+        // Tell Doctrine you want to (eventually) save the restaurant (no queries yet)
         $this->manager->persist($restaurant);
+        // Actually executes the queries (i.e. the INSERT query)
         $this->manager->flush();
 
-        $responseData = $this->serializer->serialize($restaurant, 'json');
-        $location = $this->urlGenerator->generate(
-            'app_api_restaurant_show',
-            ['id' => $restaurant->getId()],
-            UrlGeneratorInterface::ABSOLUTE_URL,
+        return $this->json(
+            ['message' => "Restaurant resource created with {$restaurant->getId()} id"],
+            Response::HTTP_CREATED,
         );
-
-        return new JsonResponse($responseData, Response::HTTP_CREATED, ["Location" => $location], true);
     }
-
     /** @OA\Get(
      *     path="/api/restaurant/{id}",
      *     summary="Afficher un restaurant par ID",
