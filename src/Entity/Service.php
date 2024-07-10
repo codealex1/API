@@ -20,10 +20,10 @@ class Service
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $heure_ouverture = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $heure_fermeture = null;
 
     public function getId(): ?int
@@ -60,7 +60,7 @@ class Service
         return $this->heure_ouverture;
     }
 
-    public function setHeureOuverture(\DateTimeInterface $heure_ouverture): static
+    public function setHeureOuverture(\DateTimeInterface $heure_ouverture ): static
     {
         $this->heure_ouverture = $heure_ouverture;
 
