@@ -33,7 +33,11 @@ security:
     access_control:
          - { path: ^/api/registration, roles: PUBLIC_ACCESS }
          - { path: ^/api/service/new, roles: PUBLIC_ACCESS }
-         - { path: ^/api/service/18, roles: PUBLIC_ACCESS }
+         - { path: ^/api/service/, roles: PUBLIC_ACCESS }
+         - { path: ^/api/habitat/new, roles: PUBLIC_ACCESS }
+         - { path: ^/api/habitat/, roles: PUBLIC_ACCESS }
+         - { path: ^/api/animal/new, roles: PUBLIC_ACCESS }
+         - { path: ^/api/animal/, roles: PUBLIC_ACCESS }
          - { path: ^/api/login, roles: PUBLIC_ACCESS }
          - { path: ^/api/doc, roles: PUBLIC_ACCESS }
          - { path: ^/api, roles: PUBLIC_ACCES }

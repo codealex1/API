@@ -22,9 +22,10 @@ class Animal
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[SerializedName("habitat_id")]
     private ?Habitat $habitat_id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column(nullable: true)]
@@ -33,12 +34,17 @@ class Animal
     #[ORM\Column(length: 255)]
     private ?string $race = null;
 
-    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Rapport::class)]
-    private Collection $rapports;
+    #[ORM\OneToMany(mappedBy: 'animal_id', targetEntity: RapportVeterinaire::class)]
+    private Collection $rapportVeterinaires;
+
+    
+
+    
 
     public function __construct()
     {
         $this->rapports = new ArrayCollection();
+        $this->rapportVeterinaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,32 +125,36 @@ class Animal
     }
 
     /**
-     * @return Collection<int, Rapport>
+     * @return Collection<int, RapportVeterinaire>
      */
-    public function getRapports(): Collection
+    public function getRapportVeterinaires(): Collection
     {
-        return $this->rapports;
+        return $this->rapportVeterinaires;
     }
 
-    public function addRapport(Rapport $rapport): static
+    public function addRapportVeterinaire(RapportVeterinaire $rapportVeterinaire): static
     {
-        if (!$this->rapports->contains($rapport)) {
-            $this->rapports->add($rapport);
-            $rapport->setRelation($this);
+        if (!$this->rapportVeterinaires->contains($rapportVeterinaire)) {
+            $this->rapportVeterinaires->add($rapportVeterinaire);
+            $rapportVeterinaire->setAnimalId($this);
         }
 
         return $this;
     }
 
-    public function removeRapport(Rapport $rapport): static
+    public function removeRapportVeterinaire(RapportVeterinaire $rapportVeterinaire): static
     {
-        if ($this->rapports->removeElement($rapport)) {
+        if ($this->rapportVeterinaires->removeElement($rapportVeterinaire)) {
             // set the owning side to null (unless already changed)
-            if ($rapport->getRelation() === $this) {
-                $rapport->setRelation(null);
+            if ($rapportVeterinaire->getAnimalId() === $this) {
+                $rapportVeterinaire->setAnimalId(null);
             }
         }
 
         return $this;
     }
+
+    
+
+    
 }

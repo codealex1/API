@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Rapport;
+use App\Entity\RapportVeterinaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Rapport>
+ * @extends ServiceEntityRepository<RapportVeterinaire>
  *
- * @method Rapport|null find($id, $lockMode = null, $lockVersion = null)
- * @method Rapport|null findOneBy(array $criteria, array $orderBy = null)
- * @method Rapport[]    findAll()
- * @method Rapport[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RapportVeterinaire|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RapportVeterinaire|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RapportVeterinaire[]    findAll()
+ * @method RapportVeterinaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RapportRepository extends ServiceEntityRepository
+class RapportVeterinaireRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Rapport::class);
+        parent::__construct($registry, RapportVeterinaire::class);
     }
 
 //    /**
-//     * @return Rapport[] Returns an array of Rapport objects
+//     * @return RapportVeterinaire[] Returns an array of RapportVeterinaire objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class RapportRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Rapport
+//    public function findOneBySomeField($value): ?RapportVeterinaire
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

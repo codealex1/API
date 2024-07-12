@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\RapportRepository;
+use App\Repository\RapportVeterinaireRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RapportRepository::class)]
-class Rapport
+#[ORM\Entity(repositoryClass: RapportVeterinaireRepository::class)]
+class RapportVeterinaire
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,8 +20,8 @@ class Rapport
     #[ORM\Column(length: 255)]
     private ?string $detail = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rapports')]
-    private ?Animal $relation = null;
+    #[ORM\ManyToOne(inversedBy: 'rapportVeterinaires')]
+    private ?Animal $animal_id = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Rapport
         return $this;
     }
 
-    public function getRelation(): ?Animal
+    public function getAnimalId(): ?Animal
     {
-        return $this->relation;
+        return $this->animal_id;
     }
 
-    public function setRelation(?Animal $relation): static
+    public function setAnimalId(?Animal $animal_id): static
     {
-        $this->relation = $relation;
+        $this->animal_id = $animal_id;
 
         return $this;
     }

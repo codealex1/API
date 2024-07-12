@@ -27,6 +27,11 @@ class Habitat
     #[ORM\OneToMany(mappedBy: 'habitat_id', targetEntity: Animal::class)]
     private Collection $animals;
 
+    public function getHabitatIdentifier(): string
+    {
+        return (string) $this->id;
+    }
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
@@ -73,33 +78,4 @@ class Habitat
         return $this;
     }
 
-    /**
-     * @return Collection<int, Animal>
-     */
-    public function getAnimals(): Collection
-    {
-        return $this->animals;
-    }
-
-    public function addAnimal(Animal $animal): static
-    {
-        if (!$this->animals->contains($animal)) {
-            $this->animals->add($animal);
-            $animal->setHabitatId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimal(Animal $animal): static
-    {
-        if ($this->animals->removeElement($animal)) {
-            // set the owning side to null (unless already changed)
-            if ($animal->getHabitatId() === $this) {
-                $animal->setHabitatId(null);
-            }
-        }
-
-        return $this;
-    }
 }
